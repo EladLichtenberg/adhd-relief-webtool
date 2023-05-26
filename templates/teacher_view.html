@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+{#        temp_dict = {#}
+{#            "personal_id": self._personal_id,#}
+{#            "name": self._name,#}
+{#            "email": self._email,#}
+{#            "phone": self._phone#}
+{#        }#}
+    {% block content %}
+        <p>Organization: {{ data['name'] }}</p>
+        <p>Organization: {{ data['personal_id'] }}</p>
+        <p>Organization: {{ data['email'] }}</p>
+        <p>Organization: {{ data['phone'] }}</p>
+    {% endblock %}
+</body>
+</html>

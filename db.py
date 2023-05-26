@@ -1,9 +1,9 @@
 import pymysql
 
-HOST = 'localhost'
+HOST = '34.165.238.176'
 USER = 'root'
-PASSWORD = '333879096'
-DBNAME = 'adhd_final_project'
+PASSWORD = '1234567890'
+DBNAME = 'adhd-database'
 
 
 class DB:
