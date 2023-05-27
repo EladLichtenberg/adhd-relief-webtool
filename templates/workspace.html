@@ -71,7 +71,11 @@
 
 <section data-bs-version="5.1" class="team2 cid-tET3obiz5V" xmlns="http://www.w3.org/1999/html" id="team2-7">
 
+    <div class="mbr-section-btn col-md-auto col" style="float: right; margin-right: 100px">
 
+        <a href="/workspace/{{ user['user']['personal_id'] }}/edit_personal_info"
+           class="btn btn-warning display-4">Edit</a>
+    </div>
     <div class="container">
         <div class="card">
             <div class="card-wrapper">
@@ -83,7 +87,7 @@
                     </div>
                     <div class="col-12 col-md">
                         {% block content %}
-                        <div class="card-box">
+                            <div class="card-box">
 
 
 
@@ -133,39 +137,58 @@
 
 <section data-bs-version="5.1" class="content17 cid-tET3DXWT91" id="content17-8">
 
+    <div class="mbr-section-btn col-md-auto col" style="float: right; margin-right: 100px">
 
+        <a href="/workspace/{{ user['user']['personal_id'] }}/programs/new_program" class="btn btn-warning display-4">New
+            Child</a>
+    </div>
     <div class="container">
 
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
                 <div class="section-head align-center mb-4">
                     <h3 class="mbr-section-title mb-0 mbr-fonts-style display-2">
-                        <strong>Toggle FAQ</strong>
+                        <strong>Children</strong>
                     </h3>
 
                 </div>
 
                 <div id="bootstrap-toggle" class="toggle-panel accordionStyles tab-content">
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse1_8" aria-expanded="false"
-                               aria-controls="collapse1">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>How to create more
-                                    items in this list?</strong>
-                                </h6>
-                                <span class="sign mbr-iconfont mbri-arrow-down"></span>
+
+                    {% block children %}
+                        {% for pupil in user['pupils'] %}
+                            <a href="/workspace/{{ user['user']['personal_id'] }}/programs/{{ pupil['id'] }}">
+                                <div class="container" style="border: 2px solid black; margin: 20px">
+                                    <div class="card">
+                                        <div class="card-wrapper">
+                                            <div class="row align-items-center">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="image-wrapper">
+                                                        <img src="{{ url_for('static',filename='profile.jpg') }}"
+                                                             alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md">
+
+                                                    <div class="card-box">
+
+                                                        <h5 class="card-title mbr-fonts-style m-0 mb-3 display-5">
+                                                            <strong>{{ pupil['name'] }}</strong>
+                                                        </h5>
+
+                                                        <p class="mbr-text mbr-fonts-style display-7">
+                                                            ID: {{ pupil['id'] }}</p>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </a>
-                        </div>
-                        <div id="collapse1_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingOne">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">The number of items is limited in this
-                                    block. Open
-                                    the Block parameters to change the amount of items.</p>
-                            </div>
-                        </div>
-                    </div>
+                        {% endfor %}
+                    {% endblock %}
                     <div class="card mb-3">
                         <div class="card-header" role="tab" id="headingTwo">
                             <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
@@ -272,7 +295,7 @@
     </div>
 </section>
 
-<section data-bs-version="5.1" class="footer3 cid-tET2VOHlId" once="footers" id="footer3-6">
+<section data-bs-version="5.1" class="footer3 cid-tET2VOHlId" once="footers" id="footer3-4">
 
 
     <div class="container">
@@ -284,78 +307,36 @@
                     <li class="foot-menu-item mbr-fonts-style display-7">
                         <a class="text-white" href="#" target="_blank">About us</a>
                     </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">Services</a>
-                    </li>
+
                     <li class="foot-menu-item mbr-fonts-style display-7">
                         <a class="text-white" href="#" target="_blank">Contact Us</a>
                     </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">Careers</a>
-                    </li>
-                    <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">Work</a>
-                    </li>
+
+
                 </ul>
             </div>
             <div class="row social-row">
                 <div class="social-list align-right pb-2">
 
 
-                    <div class="soc-item">
-                        <a href="https://twitter.com/mobirise" target="_blank">
-                            <span class="socicon-twitter socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
-                    <div class="soc-item">
-                        <a href="https://www.facebook.com/pages/Mobirise/1616226671953247" target="_blank">
-                            <span class="socicon-facebook socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
-                    <div class="soc-item">
-                        <a href="https://www.youtube.com/c/mobirise" target="_blank">
-                            <span class="socicon-youtube socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
-                    <div class="soc-item">
-                        <a href="https://instagram.com/mobirise" target="_blank">
-                            <span class="socicon-instagram socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
-                    <div class="soc-item">
-                        <a href="https://plus.google.com/u/0/+Mobirise" target="_blank">
-                            <span class="socicon-googleplus socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
-                    <div class="soc-item">
-                        <a href="https://www.behance.net/Mobirise" target="_blank">
-                            <span class="socicon-behance socicon mbr-iconfont mbr-iconfont-social"></span>
-                        </a>
-                    </div>
                 </div>
             </div>
             <div class="row row-copirayt">
                 <p class="mbr-text mb-0 mbr-fonts-style mbr-white align-center display-7">
-                    © Copyright 2025 Mobirise. All Rights Reserved.
+                    © Copyright 2023 ORT Braude. All Rights Reserved.
                 </p>
             </div>
         </div>
     </div>
+
 </section>
-<section class="display-7"
-         style="padding: 0;align-items: center;justify-content: center;flex-wrap: wrap;    align-content: center;display: flex;position: relative;height: 4rem;">
-    <a href="https://mobiri.se/" style="flex: 1 1;height: 4rem;position: absolute;width: 100%;z-index: 1;"><img alt=""
-                                                                                                                style="height: 4rem;"
-                                                                                                                src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></a>
-    <p style="margin: 0;text-align: center;" class="display-7">Made with &#8204;</p><a style="z-index:1"
-                                                                                       href="https://mobirise.com/builder/easiest-website-builder.html">Easiest
-    Website Builder</a></section>
-<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/smoothscroll/smooth-scroll.js"></script>
-<script src="assets/ytplayer/index.js"></script>
-<script src="assets/dropdown/js/navbar-dropdown.js"></script>
-<script src="assets/mbr-switch-arrow/mbr-switch-arrow.js"></script>
-<script src="assets/theme/js/script.js"></script>
+
+<script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='smooth-scroll.js') }}"></script>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+<script src="{{ url_for('static', filename='navbar-dropdown.js') }}"></script>
+<script src="{{ url_for('static', filename='mbr-switch-arrow.js') }}"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 
 </body>

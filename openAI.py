@@ -1,2 +1,18 @@
+import openai
+import requests
+import os
+import json
 
-api_key = ""
+url = 'https://api.openai.com/v1/chat/completions'
+
+api_key = "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"
+token = "Bearer " + api_key
+
+header = {"Content-Type": "application/json",
+          "Authorization": token}
+data = {
+  "model": "davinci",
+  "messages": [{"role": "user", "content": "Hello!"}]
+}
+response = requests.post(url=url, headers=header, json=data)
+print(json.dumps(response.json(), indent=4))

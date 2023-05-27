@@ -1,14 +1,8 @@
-from flask import Flask, redirect, abort, request, render_template, session, url_for
 from db import db
 from classes.user import Teacher, Parent
 import os
 from flask import Flask, session, redirect, render_template, request, abort, jsonify, url_for
-import requests
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import auth
-from google.oauth2 import id_token
-# from google.auth.transport import requests
+from algorithm import get_program, get_programm_as_string
 from authlib.integrations.flask_client import OAuth
 import firebase_admin
 from firebase_admin import credentials, auth
@@ -16,7 +10,6 @@ from firebase_admin import credentials, auth
 GOOGLE_CLIENT_ID = "716115744911-j2flcrafmde0v6rujupbs36us82mugjt.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET = "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"
 CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
-
 
 app = Flask(__name__)
 app.config.update(SECRET_KEY=os.urandom(24))
@@ -36,9 +29,9 @@ def main_page():
     """
     return render_template("index.html")
 
+
 @app.route("/login")
 def login():
-    headers = request.headers
     oauth.register(
         name='google',
         client_id=GOOGLE_CLIENT_ID,
@@ -48,8 +41,9 @@ def login():
             'scope': 'openid email profile'
         }
     )
-    redirect_uri = url_for('google_auth', _external=True) # ,
+    redirect_uri = url_for('google_auth', _external=True)
     return oauth.google.authorize_redirect(redirect_uri)
+
 
 @app.route('/google/auth', methods=['GET', 'POST'])
 def google_auth():
@@ -59,6 +53,7 @@ def google_auth():
     and this data is used to fetch customer id from Customers DB
 
     """
+    global current_user
     token = oauth.google.authorize_access_token()['userinfo']
 
     email = token['email']
@@ -68,100 +63,99 @@ def google_auth():
             name=result['name'],
             personal_id=result['personal_id'],
             email=result['email'],
-            permission=result['permission']
+            permission=result['permission'],
+            phone=result['phone_number']
         )
-        global current_user
+        session['current_user'] = teacher.json()
         current_user = teacher
-
-        return redirect(f"/teacher_workspace/{teacher.personal_id}")
 
     elif 'permission' in result and result['permission'] == "PARENT":
         parent = Parent(
             name=result['name'],
             personal_id=result['personal_id'],
             email=result['email'],
-            permission=result['permission']
+            permission=result['permission'],
+            phone=result['phone_number']
         )
         session['current_user'] = parent.json()
-        return redirect(f"/parent_workspace/{parent.personal_id}")
+        current_user = parent
 
+    if current_user:
+        return redirect(f"/workspace/{current_user.personal_id}")
     else:
         abort(404)
 
 
-
-
-@app.route("/teacher_workspace/<personal_id>", methods=["GET", "POST"])
-def teacher_page(personal_id):
-    if request.method == "GET":
+@app.route("/workspace/<personal_id>", methods=["GET", "POST"])
+def workspace_page(personal_id):
+    if isinstance(current_user, Teacher):
         query = f"SELECT * FROM pupils WHERE teacher_id={personal_id}"
-        result = db.execute_query(query)
-
-        data = {'user': current_user.to_dict(),
-                'pupils': result}
-
-        return render_template("workspace.html", user=data, kind="Teacher")
-    if request.method == "POST":
-        return personal_id
-
-
-@app.route("/parent_workspace/<personal_id>", methods=["GET", "POST"])
-def parent(personal_id):
-    if request.method == "GET":
-        user = session['current_user']
+        kind = 'Teacher'
+    else:
         query = f"SELECT * FROM pupils WHERE parent_id={personal_id}"
-        result = db.execute_query(query)
-        data = {'user': user,
-                'pupils': result}
-        return render_template("parent_view.html", data=data)
-    if request.method == "POST":
-        pass
+        kind = 'Parent'
 
-    return personal_id
-
-
-@app.route("/parent_workspace/<personal_id>/edit_personal_info", methods=["GET", "POST"])
-def edit_personal_info(personal_id):
-    if request.method == "GET":
-        render_template('edit_info.html', parent=current_user)
-    if request.method == "POST":
-        input_data = request.form
-
-        query = f"""UPDATE Users
-                    SET name={input_data['name']}, email={input_data['email']} 
-                    WHERE personal_id={personal_id} 
-                """  # modify query with phone number etc....
-        if db.execute_query(query):
-            return redirect(f"/parent_workspace/{personal_id}")
-
-
-@app.route("/teacher_workspace/<personal_id>/edit_personal_info", methods=["GET", "POST"])
-def edit_teacher_personal_info(personal_id):
-    if request.method == "GET":
-        render_template('edit_info.html', parent=current_user)
-    if request.method == "POST":
-        input_data = request.form
-
-        query = f"""UPDATE Users
-                    SET name={input_data['name']}, email={input_data['email']} 
-                    WHERE personal_id={personal_id} 
-                """  # modify query with phone number etc....
-        if db.execute_query(query):
-            return redirect(f"/teacher_workspace/{personal_id}")
-        else:
-            abort(500)
-
-
-@app.route("/teacher_workspace/<personal_id>/programs/new_program", methods=["POST"])
-def creating_new_program(personal_id):
-    pass
-
-
-@app.route("/teacher_workspace/<personal_id>/programs/<child_id>", methods=["GET"])
-def get_program(personal_id, child_id):
-    query = f"SELECT * FROM Programs WHERE teacher_id={personal_id} AND child_id={child_id}"
     result = db.execute_query(query)
-    return render_template("program_view.html", result=result)
+    data = {'user': current_user.to_dict(),
+            'pupils': result}
+    return render_template("workspace.html", user=data, kind=kind)
+
+
+@app.route("/workspace/<personal_id>/edit_personal_info", methods=["GET", "POST"])
+def edit_personal_info(personal_id):
+    global current_user
+
+    if request.method == "GET":
+        return render_template('edit_info.html', user_info=current_user.to_dict())
+    if request.method == "POST":
+        input_data = request.form
+        if not current_user.name == input_data['name'] or not current_user.personal_id == input_data[
+            'personal_id'] or not current_user.email == input_data['email'] or not current_user.phone == input_data[
+            'phone']:
+            query = f"""UPDATE users SET name='{input_data['name']}', email='{input_data['email']}', phone_number='{input_data['phone']}' WHERE personal_id='{personal_id}'"""
+            db.execute_query(query)
+            current_user.name = input_data['name']
+            current_user.personal_id = input_data['personal_id']
+            current_user.email = input_data['email']
+            current_user.phone = input_data['phone']
+
+        return redirect(f"/workspace/{personal_id}")
+
+
+@app.route("/workspace/<personal_id>/programs/new_program", methods=["GET", "POST"])
+def creating_new_program(personal_id):
+    if request.method == "GET":
+        return render_template("new_program.html")
+    elif request.method == "POST":
+        name = request.form['name']
+        id = request.form['id']
+        parent_name = request.form['parent_name']
+        parent_email = request.form['parent_email']
+        parent_phone = request.form['parent_phone']
+        parent_id = request.form['parent_id']
+        teacher_id = personal_id
+        age = request.form['age']
+        height = request.form['height']
+        sex = request.form['sex']
+        symptoms = request.form.getlist('symptoms')
+
+        query = f"INSERT INTO users (personal_id, name, email, permission, phone_number)" \
+                f"VALUES ('{parent_id}','{parent_name}','{parent_email}','PARENT','{parent_phone}')"
+
+        db.execute_query(query)
+        result = get_program(symptoms)
+        program_string = get_programm_as_string(id, name, result)
+        query = f"INSERT INTO pupils (id, parent_id, teacher_id, name, age, height, sex, symptom, programm)" \
+                f"VALUES ('{id}', '{parent_id}', '{teacher_id}', '{name}', {age}, {height}, '{sex}', '{result['diagnosis']}', '{program_string}')"
+        db.execute_query(query)
+        return redirect(f"/workspace/{personal_id}/programs/{id}")
+
+
+@app.route("/workspace/<personal_id>/programs/<child_id>", methods=["GET"])
+def dispaly_program(personal_id, child_id):
+    query = f"SELECT * FROM pupils WHERE id={child_id}"
+    result = db.execute_query(query)
+    return render_template("program_view.html", result=result[0])
 
 
 @app.route("/logout")

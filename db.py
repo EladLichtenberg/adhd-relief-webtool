@@ -2,7 +2,7 @@ import pymysql
 
 HOST = '34.165.238.176'
 USER = 'root'
-PASSWORD = '1234567890'
+PASSWORD = '333879096'
 DBNAME = 'adhd-database'
 
 

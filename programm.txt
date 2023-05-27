@@ -1,0 +1,15 @@
+ADHD treatment program for:
+
+Name: {name}
+ID: {id}
+
+Recommendations:
+
+Nutritional Supplements:
+- {Supplement}: {Dosage}
+  - {Description}
+
+Sports Activities:
+- {Sport}
+  - {Description}
+

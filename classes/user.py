@@ -34,6 +34,23 @@ class User:
     def permission(self, name):
         self._permission = name
 
+    @property
+    def email(self):
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        self._email = email
+
+    @property
+    def phone(self):
+        return self._phone
+
+    @phone.setter
+    def phone(self, phone):
+        self._phone = phone
+
+
     def to_dict(self):
         temp_dict = {
             "personal_id": self._personal_id,
