@@ -10,7 +10,7 @@
     <meta name="description" content="">
 
 
-    <title>Profile</title>
+    <title>Workspace</title>
     <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
     <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}">
@@ -40,7 +40,7 @@
             <div class="navbar-brand">
 
                 <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-7"
-                                                     href="https://mobiri.se">Final Project</a></span>
+                                                     href="/">ADHD Treatment</a></span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
                     data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
@@ -54,12 +54,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
-                        About us</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
-                        Services</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4"
-                                            href="https://mobiri.se">Contacts</a>
+                    <li class="nav-item"><a class="nav-link link text-black display-4" href="/logout">Log out</a></li>
+
                     </li>
                 </ul>
 
@@ -78,16 +74,16 @@
     </div>
     <div class="container">
         <div class="card">
-            <div class="card-wrapper">
+            <div class="card-wrapper" style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2)">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-4">
                         <div class="image-wrapper">
                             <img src="{{ url_for('static',filename='profile.jpg') }}" alt="">
                         </div>
                     </div>
-                    <div class="col-12 col-md">
+                    <div class="col-12 col-md" >
                         {% block content %}
-                            <div class="card-box">
+                            <div class="card-box" >
 
 
 
@@ -104,25 +100,7 @@
                             <p class="mbr-text mbr-fonts-style display-7">ID: {{ user['user']['personal_id'] }}</p>
                             <p class="mbr-text mbr-fonts-style display-7">Email: {{ user['user']['email'] }}</p>
                             <p class="mbr-text mbr-fonts-style display-7">Phone: {{ user['user']['phone'] }}</p>
-                            <div class="social-row display-7">
-                                <div class="soc-item">
-                                    <a href="https://www.facebook.com/Mobirise/" target="_blank">
-                                        <span class="mbr-iconfont socicon socicon-facebook"></span>
-                                    </a>
-                                </div>
-                                <div class="soc-item">
-                                    <a href="https://twitter.com/mobirise" target="_blank">
-                                        <span class="mbr-iconfont socicon socicon-twitter"></span>
-                                    </a>
-                                </div>
-                                <div class="soc-item">
-                                    <a href="https://instagram.com/mobirise" target="_blank">
-                                        <span class="mbr-iconfont socicon socicon-instagram"></span>
-                                    </a>
-                                </div>
 
-
-                            </div>
                         {% endblock %}
                         </div>
 
@@ -138,9 +116,10 @@
 <section data-bs-version="5.1" class="content17 cid-tET3DXWT91" id="content17-8">
 
     <div class="mbr-section-btn col-md-auto col" style="float: right; margin-right: 100px">
-
-        <a href="/workspace/{{ user['user']['personal_id'] }}/programs/new_program" class="btn btn-warning display-4">New
-            Child</a>
+        {% if kind == 'Teacher' %}
+            <a href="/workspace/{{ user['user']['personal_id'] }}/programs/new_program"
+               class="btn btn-warning display-4">New Child</a>
+        {% endif %}
     </div>
     <div class="container">
 
@@ -157,8 +136,8 @@
 
                     {% block children %}
                         {% for pupil in user['pupils'] %}
-                            <a href="/workspace/{{ user['user']['personal_id'] }}/programs/{{ pupil['id'] }}">
-                                <div class="container" style="border: 2px solid black; margin: 20px">
+                            <a href="/workspace/{{ user['user']['personal_id'] }}/programs/{{ pupil['id'] }}" style="color: black">
+                                <div class="container" style="margin: 30px; box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.2);border-radius: 4px;">
                                     <div class="card">
                                         <div class="card-wrapper">
                                             <div class="row align-items-center">
@@ -189,110 +168,10 @@
                             </a>
                         {% endfor %}
                     {% endblock %}
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingTwo">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse2_8" aria-expanded="false"
-                               aria-controls="collapse2">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>What is Mobirise
-                                    Kit?</strong>
-                                </h6>
-                                <span class="sign mbr-iconfont mbri-arrow-down"></span>
-                            </a>
 
-                        </div>
-                        <div id="collapse2_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingTwo">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">Mobirise Kit is a service that provides
-                                    the access to all current and new themes/extensions developed by Mobirise. New
-                                    themes/extensions are released every month and will be available in your account
-                                    during your plan period, without any additional charge.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingThree">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse3_8" aria-expanded="false"
-                               aria-controls="collapse3">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>Can I create sites
-                                    for commerical projects?</strong>
-                                </h6>
-                                <span class="sign mbr-iconfont mbri-arrow-down"></span>
-                            </a>
-                        </div>
-                        <div id="collapse3_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">Yes, Mobirise is free for both
-                                    non-profit and commercial sites.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingThree">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse4_8" aria-expanded="false"
-                               aria-controls="collapse4">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>What is Code
-                                    Editor?</strong>
-                                </h6>
-                                <span class="sign mbr-iconfont mbri-arrow-down"></span>
-                            </a>
-                        </div>
-                        <div id="collapse4_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">
-                                    This extension allows editing the code of block in the app. Also, it's possible to
-                                    add code to the head and body parts of pages.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingThree">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse5_8" aria-expanded="false"
-                               aria-controls="collapse5">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>What is Mobirise
-                                    Kit?</strong></h6>
-                                <span class="mbr-iconfont mobi-mbri-arrow-down mobi-mbri"></span>
-                            </a>
-                        </div>
-                        <div id="collapse5_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">
-                                    Mobirise Kit is a service that provides the access to all current and new
-                                    themes/extensions developed by Mobirise. New themes/extensions are released every
-                                    month and will be available in your account during your plan period, without any
-                                    additional charge.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header" role="tab" id="headingThree">
-                            <a role="button" class="collapsed panel-title text-black" data-toggle="collapse"
-                               data-bs-toggle="collapse" data-core="" href="#collapse6_8" aria-expanded="false"
-                               aria-controls="collapse6">
-                                <h6 class="panel-title-edit mbr-fonts-style mb-0 display-7"><strong>Can I create sites
-                                    for commerical projects?</strong></h6>
-                                <span class="mbr-iconfont mobi-mbri-arrow-down mobi-mbri"></span>
-                            </a>
-                        </div>
-                        <div id="collapse6_8" class="panel-collapse noScroll collapse" role="tabpanel"
-                             aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                <p class="mbr-fonts-style panel-text display-7">
-                                    Yes, Mobirise is free for both non-profit and commercial sites.</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 
 <section data-bs-version="5.1" class="footer3 cid-tET2VOHlId" once="footers" id="footer3-4">
@@ -305,11 +184,12 @@
 
 
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">About us</a>
+                        <a class="text-white" href="/" target="_blank">About us</a> {# TODO implement About us #}
                     </li>
 
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">Contact Us</a>
+                        <a class="text-white" href="/" target="_blank">Privacy Policy</a>
+                        {# TODO implement Privacy Policy #}
                     </li>
 
 
@@ -328,7 +208,6 @@
             </div>
         </div>
     </div>
-
 </section>
 
 <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>

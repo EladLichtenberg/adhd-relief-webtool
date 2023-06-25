@@ -10,7 +10,76 @@
     <meta name="description" content="">
 
 
+    <style>
+        .notification {
+            background-color: pink;
+            border: 1px solid red;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            font-size: 40px;
+            color: red;
+            padding-right: 50px;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            padding-left: 50px;
+            position: relative;
+            top: 11%;
+
+
+        {#z-index: 9999;#}
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Check if the Flask message exists
+            var flaskMessage = "{{ msg[0] }}";  // Replace with the Flask message variable
+
+            if (flaskMessage) {
+                // Display the notification rectangle
+                {#$('.notification').text(flaskMessage);#}
+                {#$('.notification').show();#}
+                alert(flaskMessage)
+            }
+        });
+    </script>
+
+    <style>
+
+        .week-calendar {
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: center;
+            align-items: center;
+        {#text-align: center;#}
+        }
+
+        .week-day {
+
+            width: 110px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+            position: relative;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            margin: 0px 10px 0px 10px;
+        }
+
+        .week-day input[type="checkbox"] {
+            display: none;
+        }
+
+
+    </style>
+
     <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='calendar.css') }}">
+
     <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
     <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}">
@@ -28,7 +97,7 @@
     </noscript>
     <link rel="preload" as="style" href="{{ url_for('static',filename='mbr-additional.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='mbr-additional.css') }}" type="text/css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -70,7 +139,7 @@
     <div class="container-fluid">
         <div class="mbr-section-head">
             <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <strong>Edit profile</strong>
+                <strong>Choose sport activity</strong>
             </h3>
 
         </div>
@@ -85,38 +154,78 @@
                     {#                            Oops...! some problem!#}
                     {#                        </div>#}
                     {#                    </div>#}
-                    <div class="dragArea row">
-                        <label>Full Name</label>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="name" placeholder="Full name" class="form-control"
-                                   value="{{ user_info['name'] }}"
-                                   id="name-form6-j" required>
-                        </div>
-                        <label>Personal ID</label>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="personal_id" placeholder="ID" class="form-control"
-                                   value="{{ user_info['personal_id'] }}"
-                                   id="name-form6-j" readonly>
-                        </div>
-                        <label>Email</label>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="email" name="email" placeholder="Email" class="form-control"
-                                   value="{{ user_info['email'] }}"
-                                   id="name-form6-j" required>
-                        </div>
-                        <label>Phone number</label>
-                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="phone" placeholder="Phone number" class="form-control"
-                                   value="{{ user_info['phone'] }}"
-                                   id="name-form6-j" required>
-                        </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                        {#                     <div style="align-items: center; display: flex; flex-wrap: wrap;justify-content: center; margin-bottom: 10px">#}
+                        {#                                    <h1>Choose sport activity</h1><br>#}
+                        {#                                </div>#}
+
+                        {% for item in data %}
 
 
-                        <div class="col-auto mbr-section-btn align-center">
-                            <button type="submit" class="btn btn-primary display-4">Submit</button>
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                <div style="align-items: center; display: flex; flex-wrap: wrap;justify-content: center; margin-bottom: 10px">
+                                    <h3>{{ item }}</h3>
+                                </div>
+                                <div class="week-calendar">
 
-                        </div>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Sunday">
+                                        <span class="txt">Sunday</span>
+                                    </label>
+
+                                    {#                                    <label class="week-day">#}
+                                    {#                                        <input type="checkbox" name="{{ item }}-week" value="Sunday">#}
+                                    {#                                        <span>Sunday</span>#}
+                                    {#                                    </label>#}
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Monday">
+                                        <span class="txt">Monday</span>
+                                    </label>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Tuesday">
+                                        <span class="txt">Tuesday</span>
+                                    </label>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Wednesday">
+                                        <span class="txt">Wednesday</span>
+                                    </label>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Thursday">
+                                        <span class="txt">Thursday</span>
+                                    </label>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Friday">
+                                        <span class="txt">Friday</span>
+                                    </label>
+                                    <label class="week-day">
+                                        <input type="checkbox" name="{{ item }}-week" value="Saturday">
+                                        <span class="txt">Saturday</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    $('input[type="checkbox"]').change(function () {
+                                        if ($(this).is(':checked')) {
+                                            $(this).closest('.week-day').css('background-color', '#6592e6');
+                                            $(this).siblings('span').css('color', 'white');
+                                        } else {
+                                            $(this).closest('.week-day').css('background-color', 'white');
+                                            $(this).siblings('.week-day').css('background-color', '');
+                                            $(this).siblings('span').css('color', 'black');
+                                        }
+                                    });
+                                });
+                            </script>
+                        {% endfor %}
                     </div>
+
+                    <div class="col-auto mbr-section-btn align-center"
+                         style="align-items: center; display: flex; flex-wrap: wrap;justify-content: center; margin: 40px">
+                        <button type="submit" class="btn btn-primary display-4">Submit</button>
+
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -258,7 +367,8 @@
                     </li>
 
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="/" target="_blank">Privacy Policy</a> {# TODO implement Privacy Policy #}
+                        <a class="text-white" href="/" target="_blank">Privacy Policy</a>
+                        {# TODO implement Privacy Policy #}
                     </li>
 
 

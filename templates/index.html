@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Site made with Mobirise Website Builder v5.8.9, https://mobirise.com -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v5.8.9, mobirise.com">
@@ -10,7 +9,7 @@
     <meta name="description" content="">
 
 
-    <title>Home</title>
+    <title>Welcome</title>
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap-grid.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap-reboot.min.css') }}">
@@ -27,38 +26,26 @@
     <link rel="preload" as="style" href="{{ url_for('static',filename='mbr-additional.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='mbr-additional.css') }}" type="text/css">
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var flaskMessage = "{{ msg[0] }}";  // Replace with the Flask message variable
+            if (flaskMessage) {
+                alert(flaskMessage)
+            }
+        });
+    </script>
 </head>
 <body>
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyD7m66N5TMyELoa8o2127kglaZSrV9rw1Y",
-        authDomain: "braude-final-project.firebaseapp.com",
-        projectId: "braude-final-project",
-        storageBucket: "braude-final-project.appspot.com",
-        messagingSenderId: "115945109812",
-        appId: "1:115945109812:web:7b5e944b98415933cd8d61"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-</script>
 
 <section data-bs-version="5.1" class="menu menu1 cid-tET2ouJGRV" once="menu" id="menu1-0">
-
 
     <nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
         <div class="container">
             <div class="navbar-brand">
 
                 <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-7"
-                                                     href="https://mobiri.se">Final Project</a></span>
+                                                     href="/">ADHD Treatment</a></span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse"
                     data-target="#navbarSupportedContent" data-bs-target="#navbarSupportedContent"
@@ -72,12 +59,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
-                        About us</a></li>
-                    <li class="nav-item"><a class="nav-link link text-black display-4" href="https://mobiri.se">
-                        Services</a></li>
+
                     <li class="nav-item"><a class="nav-link link text-black display-4"
-                                            href="https://mobiri.se">Contacts</a>
+                                            href="/privacy">Privacy Policy</a>
                     </li>
                 </ul>
 
@@ -87,18 +71,21 @@
     </nav>
 </section>
 
-<section data-bs-version="5.1" class="content4 cid-tET2RuvgNt" id="content4-2">
+<section data-bs-version="5.1" class="content4 cid-tET2RuvgNt" id="content4-2" style="margin-bottom: 20px">
 
 
     <div class="container">
         <div class="row justify-content-center">
             <div class="title col-md-12 col-lg-10">
                 <h3 class="mbr-section-title mbr-fonts-style align-center mb-4 display-2">
-                    <strong>ADHD treatment programm</strong>
+                    <strong>ADHD treatment portal<br></strong>
+
                 </h3>
                 <h4 class="mbr-section-subtitle align-center mbr-fonts-style mb-4 display-5">
-                    Please, provide teacher/parent credentials to login into the system.
-                    All information is sensitive, keep in secret
+                    This portal assits to teacher and parents to manage treatment programs.
+                </h4>
+                <h4 class="mbr-section-subtitle align-center mbr-fonts-style mb-4 display-5">
+                    This portal contains sensitive data. Keep it in secret
                 </h4>
 
             </div>
@@ -125,14 +112,15 @@
                     </div>
                     <div class="dragArea row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            <h1 class="mbr-section-title mb-4 align-center mbr-fonts-style display-2">
-                                <strong>To start, press Sign In</strong></h1>
+                            <p class="mbr-section-title mb-4 align-center mbr-fonts-style display-2">
+                                To start, press Sign In</p>
                         </div>
 
-                        <div class="mbr-section-btn col-md-auto col">
 
-                            <a href="/login" class="btn btn-warning display-4">Sign In</a>
-                        </div>
+                    </div>
+                    <div class="mbr-section-btn col-md-auto col" style="position: relative;">
+
+                        <a href="/login" class="btn btn-warning display-4">Sign In</a>
                     </div>
                 </form>
             </div>
@@ -150,11 +138,12 @@
 
 
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">About us</a>
+                        <a class="text-white" href="/" target="_blank">About us</a> {# TODO implement About us #}
                     </li>
 
                     <li class="foot-menu-item mbr-fonts-style display-7">
-                        <a class="text-white" href="#" target="_blank">Contact Us</a>
+                        <a class="text-white" href="/" target="_blank">Privacy Policy</a>
+                        {# TODO implement Privacy Policy #}
                     </li>
 
 

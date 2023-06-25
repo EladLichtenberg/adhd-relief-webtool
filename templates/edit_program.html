@@ -98,188 +98,152 @@
                     <p>All * fields are required</p>
                     <div class="dragArea row">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="name" placeholder="Full name * " class="form-control" value=""
+                            <input type="text" name="name" placeholder="Full name * " class="form-control"
+                                   value="{{ result['name'] }}"
                                    id="input-name">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="id" placeholder="ID * " class="form-control" value=""
-                                   id="input-id" >
+                            <input type="text" name="id" placeholder="ID * " class="form-control"
+                                   value="{{ result['id'] }}"
+                                   id="input-id" readonly>
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                            <input type="text" name="age" placeholder="Age * " class="form-control" value=""
-                                   id="name-form6-j" >
+                            <input type="text" name="age" placeholder="Age * " class="form-control"
+                                   value="{{ result['age'] }}"
+                                   id="name-form6-j">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
                             <input type="text" name="height" placeholder="Height *" class="form-control"
-                                   value=""
-                                   id="name-form6-j" >
+                                   value="{{ result['height'] }}"
+                                   id="name-form6-j">
                         </div>
-                        <select class="form-control" name="sex"
-                                style="margin-top: 20px; margin-bottom: 20px" >
-                            <option value="" disabled selected>Select gender *</option>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                        </select>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                            <input type="text" name="gender" placeholder="Height *" class="form-control"
+                                   value="{{ result['sex'] }}"
+                                   id="name-form6-j" readonly>
+                        </div>
+                        {% block simp %}
                         <p>Chose symptoms * </p>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
                             <label>
-                                <input type="checkbox" name="symptoms" value="TASKFOCUS"> Often has trouble
+                                <input type="checkbox" name="symptoms" value="TASKFOCUS" {% if "TASKFOCUS" in result['criteria'] %}checked{% endif %}> Often has trouble
                                 staying
                                 focused on tasks at work, home, or play
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="CARELESS"> Frequently does not pay
+                                <input type="checkbox" name="symptoms" value="CARELESS" {% if "TASKFOCUS" in result['criteria'] %}checked{% endif %}> Frequently does not pay
                                 close
                                 attention to details or makes careless mistakes at work or while doing other
                                 tasks
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="UNORGAN"> Often has trouble
+                                <input type="checkbox" name="symptoms" value="UNORGAN" {% if "TASKFOCUS" in result['criteria'] %}checked{% endif %}> Often has trouble
                                 organizing
                                 tasks or activities
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="EASILYDISTRACT"> Is easily
+                                <input type="checkbox" name="symptoms" value="EASILYDISTRACT" {% if "TASKFOCUS" in result['criteria'] %}checked{% endif %}> Is easily
                                 distracted
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="NOTFINISH"> Frequently does not
+                                <input type="checkbox" name="symptoms" value="NOTFINISH" {% if "TASKFOCUS" in result['criteria'] %}checked{% endif %}> Frequently does not
                                 follow
                                 through on instructions or fails to complete work assignments, chores, or
                                 other
                                 activities
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="FORGETFUL"> Often forgets doing
+                                <input type="checkbox" name="symptoms" value="FORGETFUL" {% if "FORGETFUL" in result['criteria'] %}checked{% endif %}> Often forgets doing
                                 routine
                                 chores
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="DISLIKEEFFORT"> Avoids tasks that
+                                <input type="checkbox" name="symptoms" value="DISLIKEEFFORT" {% if "DISLIKEEFFORT" in result['criteria'] %}checked{% endif %}> Avoids tasks that
                                 require
                                 long periods of mental focus
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="LOSINGTHINGS"> Often loses items
+                                <input type="checkbox" name="symptoms" value="LOSINGTHINGS" {% if "LOSINGTHINGS" in result['criteria'] %}checked{% endif %}> Often loses items
                                 needed to
                                 complete tasks or activities
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="NOTLISTEN"> Does not appear to be
+                                <input type="checkbox" name="symptoms" value="NOTLISTEN" {% if "NOTLISTEN" in result['criteria'] %}checked{% endif %}> Does not appear to be
                                 listening even when spoken to directly
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="FIDGET"> Often fidgets with or
+                                <input type="checkbox" name="symptoms" value="FIDGET" {% if "FIDGET" in result['criteria'] %}checked{% endif %}> Often fidgets with or
                                 taps hands
                                 or feet or squirms in seat.
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="UNSEATED"> Often leaves seat in
+                                <input type="checkbox" name="symptoms" value="UNSEATED" {% if "UNSEATED" in result['criteria'] %}checked{% endif %}> Often leaves seat in
                                 situations
                                 when remaining seated is expected
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="RUNNINGCLIMBING"> Often runs about
+                                <input type="checkbox" name="symptoms" value="RUNNINGCLIMBING" {% if "RUNNINGCLIMBING" in result['criteria'] %}checked{% endif %}> Often runs about
                                 or
                                 climbs in situations where it is inappropriate.
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="UNQUIET"> Often unable to play or
+                                <input type="checkbox" name="symptoms" value="UNQUIET" {% if "UNQUIET" in result['criteria'] %}checked{% endif %}> Often unable to play or
                                 engage
                                 in leisure activities quietly.
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="DRIVENMOTOR"> Is often “on the
+                                <input type="checkbox" name="symptoms" value="DRIVENMOTOR" {% if "DRIVENMOTOR" in result['criteria'] %}checked{% endif %}> Is often “on the
                                 go,” acting
                                 as if “driven by a motor” (e.g., is unable to remain still — in restaurants
                                 or meetings,
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="EXCESSIVETALK"> Often talks
+                                <input type="checkbox" name="symptoms" value="EXCESSIVETALK" {% if "EXCESSIVETALK" in result['criteria'] %}checked{% endif %}> Often talks
                                 excessively.
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="BLURTING"> Often blurts out an
+                                <input type="checkbox" name="symptoms" value="BLURTING" {% if "BLURTING" in result['criteria'] %}checked{% endif %}> Often blurts out an
                                 answer
                                 before a question has been completed
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="IMPATIENT"> Often has difficulty
+                                <input type="checkbox" name="symptoms" value="IMPATIENT" {% if "IMPATIENT" in result['criteria'] %}checked{% endif %}> Often has difficulty
                                 waiting
                                 his or her turn
                             </label><br>
                             <label>
-                                <input type="checkbox" name="symptoms" value="INTRUDES"> Often interrupts or
+                                <input type="checkbox" name="symptoms" value="INTRUDES" {% if "INTRUDES" in result['criteria'] %}checked{% endif %}> Often interrupts or
                                 intrudes on
                                 others (e.g., butts into conversations, games, or activities;
                             </label><br>
-
+                            {% endblock %}
 
                             <div class="mbr-section-head" style="margin: 20px">
                                 <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
                                     <strong>Parent's info</strong>
                                 </h3>
-                                <label for="parentOption">Choose if it's a new parent or an existing
-                                    one:</label><br>
-                                <select id="parentOption" class="form-control" name="sex"
-                                        style="margin-top: 20px; margin-bottom: 20px" >
-
-                                    <label for="parentOption">Choose if it's a new parent or an existing
-                                        one:</label><br>
-                                    <option value="existing">Existing Parent</option>
-                                    <option value="new">New Parent</option>
-                                </select>
-
-                                <div id="existing_parent" style="visibility: visible">
-                                    <select id="selection_existing" class="form-control" name="parent_type"
-                                            value=""
-
-                                            style="margin-top: 20px; margin-bottom: 20px">
-                                        <option value="" disabled selected>Select parent *</option>
-                                        {% block parents %}
-                                            {% for parent in data %}
-                                                <option
-                                                        value="{{ parent['personal_id'] }}">{{ parent['name'] + ': ' +parent['personal_id'] }}</option>
-
-                                            {% endfor %}
-                                        {% endblock %}
-                                    </select>
-
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                    <input type="text" name="parent_name" placeholder="Height *" class="form-control"
+                                           value="{{ parent['name'] }}"
+                                           id="name-form6-j" readonly>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                    <input type="text" name="parent_id" placeholder="Height *" class="form-control"
+                                           value="{{ parent['personal_id'] }}"
+                                           id="name-form6-j" readonly>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                    <input type="text" name="phone" placeholder="Height *" class="form-control"
+                                           value="{{ parent['phone_number'] }}"
+                                           id="name-form6-j" readonly>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
+                                    <input type="text" name="email" placeholder="Height *" class="form-control"
+                                           value="{{ parent['email'] }}"
+                                           id="name-form6-j" readonly>
                                 </div>
 
-                                <div id="new_parent">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                                        <input type="text" name="parent_name" placeholder="Parent name *"
-                                               class="form-control"
-                                               value=""
-
-                                               id="name-form6-j"
-                                        >
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                                        <input type="email" name="parent_email" placeholder="Parent email *"
-                                               class="form-control"
-                                               value=""
-
-                                               id="name-form6-j">
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                                        <input type="text" name="parent_phone" placeholder="Parent phone *"
-                                               class="form-control"
-                                               value=""
-
-                                               id="name-form6-j">
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                                        <input type="text" name="parent_id" placeholder="Parent ID *"
-                                               class="form-control"
-                                               value=""
-
-                                               id="name-form6-j">
-                                    </div>
-
-                                </div>
                                 <div class="col-auto mbr-section-btn align-center">
                                     <button id="submitButton" type="submit" class="btn btn-primary display-4"
                                     >Submit

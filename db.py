@@ -1,10 +1,5 @@
 import pymysql
-
-HOST = '34.165.238.176'
-USER = 'root'
-PASSWORD = '333879096'
-DBNAME = 'adhd-database'
-
+import os
 
 class DB:
 
@@ -15,6 +10,16 @@ class DB:
         self._password = password
 
     def open_connection(self):
+        """
+        Opens a connection to a MySQL database.
+        The method attempts to establish a connection to the database using the provided host, user, password,
+        database name, and cursor class (pymysql.cursors.DictCursor).
+        If an exception of type pymysql.MySQLError occurs during the connection attempt, it is printed, and None is returned.
+
+        Returns:
+            The established database connection object, or None if an error occurs.
+
+        """
         try:
             connection = pymysql.connect(host=self._host,
                                          user=self._user,
@@ -27,6 +32,20 @@ class DB:
         return connection
 
     def execute_query(self, query):
+        """
+            Executes a SQL query on the database connection.
+
+            Opens a connection to the database, creates a cursor object, and executes the provided query.
+            The method fetches all the results, commits the transaction, closes the connection, and returns the results.
+
+            If an exception of type pymysql.MySQLError occurs during the execution, it is printed and None is returned.
+
+            Args:
+                query (str): The SQL query to execute.
+
+            Returns:
+                The results of the query as a list of dictionaries, or None if an error occurs.
+        """
         try:
             conn = self.open_connection()
             cursor = conn.cursor()
@@ -40,22 +59,16 @@ class DB:
             return None
 
 
+#Initialize DB connector
+# HOST = '34.165.238.176'
+# HOST = '127.0.0.1'
+# USER = 'root'
+# PASSWORD = '333879096'
+# DBNAME = 'adhd_final_project'
+#
+HOST = os.environ.get("ENV_DB_HOST")
+USER = os.environ.get("ENV_DB_USER")
+PASSWORD = os.environ.get("ENV_DB_PASS")
+DBNAME = os.environ.get("ENV_DB_NAME")
 db = DB(HOST, DBNAME, USER, PASSWORD)
-
-
-# def fetch(query):
-#     # query = f"SELECT * FROM Users WHERE email='{email}'"
-#     req = query.split(sep='\'')
-#     result = req[1]
-#     for x in USERS_TABLE:
-#         if x['email'] == result:
-#             return x
-#     return None
-
-if __name__ == '__main__':
-    email = 'docmat63@gmail.com'
-    query = f"SELECT * FROM Users WHERE email='{email}'"
-    e = db.execute_query(query)
-    print(e)
-
 
