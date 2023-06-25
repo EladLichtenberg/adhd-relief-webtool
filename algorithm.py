@@ -254,22 +254,3 @@ def remove_duplicates(data: list):
                     data.remove(item)
     return data
 
-
-if __name__ == '__main__':
-    # from openAI import OpenAIModel
-    #
-    # url = 'https://api.openai.com/v1/chat/completions'
-    # # api_key = os.environ.get("ENV_API_KEY")
-    # api_key = "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"
-    # chat = OpenAIModel(api_key, url)
-    # res = find_appropriate_suppliments(['hyperactivity', 'impulsivity', 'inattention'])
-    # res = remove_duplicates(res)
-    # rec = chat.execute_query(res)
-    # print(res)
-    re = get_program(['RUNNINGCLIMBING',
-                      'UNQUIET',
-                      'DRIVENMOTOR'
-                      'EXCESSIVETALK',
-                      'BLURTING',
-                      'IMPATIENT',
-                      'INTRUDES'])
