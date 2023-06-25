@@ -7,7 +7,7 @@ from flask import Flask, session, redirect, render_template, request, url_for, a
 from algorithm import get_program, get_programm_as_string
 from authlib.integrations.flask_client import OAuth
 from mail import send_mail_notification
-
+import secrets
 from oauthlib.oauth2 import OAuth2Error
 
 
@@ -65,7 +65,8 @@ def login():
         Raises:
             Any exceptions raised by the underlying OAuth library.
     """
-
+    if 'current_user' in session:
+        session.pop('current_user', None)
     oauth.register(
         name='google',
         client_id=GOOGLE_CLIENT_ID,
@@ -73,10 +74,12 @@ def login():
         server_metadata_url=CONF_URL,
         client_kwargs={
             'scope': 'openid email profile'
-        }
+        },
+
     )
     redirect_uri = url_for('google_auth', _external=True)
-    return oauth.google.authorize_redirect(redirect_uri)
+
+    return oauth.google.authorize_redirect(redirect_uri, prompt='consent')
 
 
 @app.route('/google/auth', methods=['GET', 'POST'])
@@ -87,10 +90,9 @@ def google_auth():
     and this data is used to fetch customer id from Customers DB
 
     """
-
+    if 'current_user' in session:
+        return redirect("/login")
     global current_user
-
-    # token = oauth.google.authorize_access_token()['userinfo']
 
     try:
         token = oauth.google.authorize_access_token()['userinfo']
@@ -462,6 +464,6 @@ def logout():
     print('Logged out')
     return redirect('/')
 
-#
+
 # if __name__ == '__main__':
 #     app.run(host=HOST, port=PORT, debug=DEBUG)
